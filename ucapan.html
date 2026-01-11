@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Untuk Istriku</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        background: linear-gradient(180deg, #f7f5fb 0%, #f2eef9 100%);
+        color: #4b4458;
+        line-height: 1.9;
+      }
+
+      .container {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 80px 24px;
+      }
+
+      .hero {
+        text-align: center;
+        margin-bottom: 120px;
+      }
+
+      .hero h1 {
+        font-size: 2.6em;
+        font-weight: 600;
+        color: #6b5b95;
+        margin-bottom: 10px;
+      }
+
+      .hero p {
+        font-size: 1.1em;
+        color: #8a7fa8;
+      }
+
+      .divider {
+        width: 60px;
+        height: 2px;
+        background: #d6cdef;
+        margin: 60px auto;
+        border-radius: 2px;
+      }
+
+      .message {
+        font-size: 1.15em;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.8s ease;
+      }
+
+      .message.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .message p {
+        margin-bottom: 36px;
+      }
+
+      .closing {
+        margin-top: 100px;
+        text-align: center;
+        font-size: 1.2em;
+        color: #6b5b95;
+        font-weight: 500;
+      }
+
+      .signature {
+        margin-top: 40px;
+        text-align: center;
+        font-style: italic;
+        color: #8a7fa8;
+      }
+
+      .next-btn {
+        display: block;
+        margin: 100px auto 0;
+        padding: 16px 40px;
+        border-radius: 40px;
+        border: none;
+        background: #6b5b95;
+        color: white;
+        font-size: 1em;
+        cursor: pointer;
+        transition: opacity 0.3s ease;
+      }
+
+      .next-btn:hover {
+        opacity: 0.85;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <audio id="bgMusic" loop>
+        <source src="JourneyofLife.mp3" type="audio/mpeg" />
+      </audio>
+
+      <div class="music-control" onclick="toggleMusic()">
+        <span id="musicIcon">🔈</span>
+      </div>
+
+      <div class="hero">
+        <h1>Iis Ismawati</h1>
+        <p>Selamat Ulang Tahun ke-26</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="message" id="message">
+        <p>
+          Untuk istriku,<br /><br />
+          Di usia 26 tahun ini, aku ingin kamu tahu satu hal sederhana. Aku
+          bersyukur bisa mengenal dan berjalan sejauh ini denganmu.
+        </p>
+
+        <p>
+          Di setiap peran yang kamu jalani, sebagai pasangan, sebagai ibu,
+          sebagai diri kamu sendiri, aku selalu melihat ketulusan dan keteguhan
+          yang jarang dimiliki banyak orang. Kamu menjalani semuanya dengan
+          hati, bukan sekadar kewajiban.
+        </p>
+
+        <p>
+          Kesabaranmu bukan hanya membuat aku merasa dicintai, tapi juga
+          mengajarkan aku untuk tumbuh. Dari caramu bersikap, aku belajar bahwa
+          kedewasaan lahir dari ketenangan, bukan dari banyaknya kata.
+        </p>
+
+        <p>
+          Melihatmu hari demi hari membuat aku semakin yakin bahwa kamu adalah
+          sosok yang kuat, hangat, dan layak mendapatkan hal-hal baik dalam
+          hidup. Kamu memberi lebih banyak daripada yang sering kamu sadari.
+        </p>
+
+        <p>
+          Semoga di usia ini, kamu selalu diberi ruang untuk bahagia, waktu
+          untuk bernapas, dan kekuatan untuk terus menjadi diri kamu apa adanya.
+          Aku bangga padamu, hari ini dan seterusnya.
+        </p>
+      </div>
+
+      <div class="closing">Selamat ulang tahun.</div>
+      <div class="signature">— Dari suamimu, yang mencintaimu</div>
+
+      <button class="next-btn" onclick="goToGallery()">Lihat Kenangan</button>
+    </div>
+    <script>
+      const message = document.getElementById("message");
+      const bgMusic = document.getElementById("bgMusic");
+      const musicIcon = document.getElementById("musicIcon");
+
+      let isPlaying = false;
+
+      // volume default (1 = sesuai file asli)
+      bgMusic.volume = 1;
+
+      // animasi teks masuk + autoplay musik
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          message.classList.add("visible");
+        }, 300);
+
+        bgMusic
+          .play()
+          .then(() => {
+            isPlaying = true;
+            musicIcon.textContent = "🔊";
+          })
+          .catch(() => {
+            // fallback kecil kalau browser masih rese
+            musicIcon.textContent = "🔈";
+          });
+      });
+
+      function goToGallery() {
+        window.location.href = "gallery.html";
+      }
+
+      // kontrol manual
+      function toggleMusic() {
+        if (isPlaying) {
+          bgMusic.pause();
+          musicIcon.textContent = "🔈";
+        } else {
+          bgMusic.play();
+          musicIcon.textContent = "🔊";
+        }
+        isPlaying = !isPlaying;
+      }
+    </script>
+  </body>
+</html>
