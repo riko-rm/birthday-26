@@ -158,7 +158,16 @@
 
     <script>
       const message = document.getElementById("message");
+      const bgMusic = document.getElementById("bgMusic");
+      const musicIcon = document.getElementById("musicIcon");
 
+      let isPlaying = false;
+      let hasStarted = false;
+
+      // volume default (1 = sesuai file asli)
+      bgMusic.volume = 1;
+
+      // animasi teks masuk
       window.addEventListener("load", () => {
         setTimeout(() => {
           message.classList.add("visible");
@@ -169,13 +178,8 @@
         window.location.href = "gallery.html";
       }
 
-      const bgMusic = document.getElementById("bgMusic");
-      const musicIcon = document.getElementById("musicIcon");
-
-      let isPlaying = false;
-      let hasStarted = false;
-
-      function startMusicOnScroll() {
+      // satu pintu buat play musik
+      function tryPlayMusic() {
         if (hasStarted) return;
 
         bgMusic
@@ -184,17 +188,28 @@
             isPlaying = true;
             hasStarted = true;
             musicIcon.textContent = "🔊";
-            window.removeEventListener("scroll", startMusicOnScroll);
+            removeMusicTriggers();
           })
           .catch(() => {
-            // kalau masih diblok, biarin user klik manual
+            // browser masih songong, tapi jangan loop
             hasStarted = true;
           });
       }
 
-      // trigger di scroll pertama
-      window.addEventListener("scroll", startMusicOnScroll, { once: true });
+      function removeMusicTriggers() {
+        document.removeEventListener("click", tryPlayMusic);
+        document.removeEventListener("scroll", tryPlayMusic);
+        document.removeEventListener("touchstart", tryPlayMusic);
+        document.removeEventListener("keydown", tryPlayMusic);
+      }
 
+      // semua kemungkinan interaksi manusia
+      document.addEventListener("click", tryPlayMusic, { once: true });
+      document.addEventListener("scroll", tryPlayMusic, { once: true });
+      document.addEventListener("touchstart", tryPlayMusic, { once: true });
+      document.addEventListener("keydown", tryPlayMusic, { once: true });
+
+      // kontrol manual
       function toggleMusic() {
         if (isPlaying) {
           bgMusic.pause();
